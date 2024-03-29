@@ -1,4 +1,10 @@
 package com.example.movierecommenderapp
 
-class reviewedMoviesViewModel {
+import android.view.View
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+
+class reviewedMoviesViewModel: ViewModel() {
+
+
 }
