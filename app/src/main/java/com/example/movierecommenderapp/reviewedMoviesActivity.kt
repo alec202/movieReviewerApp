@@ -13,10 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
@@ -47,10 +49,9 @@ fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    // . we don't want to fill max width or max height because
-                // max width would make it take entire horizontal area.
-                // max height would max it take entire vertical area of screen
-                // perhaps the border is the modifer we want?
+                    .width(80.dp) // need to test this line and see if it's doing what
+                // we think it's doing
+
 
 
             )
