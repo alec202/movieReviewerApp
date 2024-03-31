@@ -15,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.Column
 
 
 class reviewedMoviesActivity : ComponentActivity() {
@@ -32,7 +34,9 @@ class reviewedMoviesActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Column {
+                        Text("Test")
+                    }
                 }
             }
         }
@@ -41,7 +45,7 @@ class reviewedMoviesActivity : ComponentActivity() {
 
 @Composable
 fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
-    LazyColumn{
+    LazyRow{
         items(movieList.size){
             Text(
                 text = movieList[it].movieName,
@@ -64,6 +68,6 @@ fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
 @Composable
 fun displayWatchedMoviesPreview() {
     MovieRecommenderAppTheme {
-        displayWatchedMovies()
+//        displayWatchedMovies()
     }
 }
