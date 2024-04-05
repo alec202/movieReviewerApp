@@ -13,6 +13,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
     fun buttonToLaunchUserMovieScreen() {
         Button(
             onClick = {
-                val toUserMovies = Intent(this, reviewedMoviesActivity::class.java)
+                val toUserMovies = Intent(this, LoginActivity::class.java)
                 startActivity(toUserMovies)
             }, content = {
                 Text("Go to Second screen")
