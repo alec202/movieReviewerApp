@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.core.content.ContextCompat.startActivity
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
 
 class MainActivity : ComponentActivity() {
+    val vm: MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -38,11 +40,20 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Greeting("Android")
                         buttonToLaunchUserMovieScreen()
-
+                        buttonToLogout()
                     }
                 }
             }
         }
+
+
+    }
+
+
+    //Collects uid for user after logging in
+    override fun onResume() {
+        super.onResume()
+        vm.uid.value = intent.getStringExtra("uid")
     }
 
 
@@ -64,6 +75,22 @@ class MainActivity : ComponentActivity() {
                 Text("Go to Second screen")
             })
 
+    }
+
+    //Button that allows the user to log out
+    @Composable
+    fun buttonToLogout() {
+        Button(
+            onClick = {
+                vm.logout()
+                val toLogin = Intent(this, LoginActivity::class.java)
+                startActivity(toLogin)
+                finish()
+
+            }, content = {
+                Text("Log back out")
+            }
+        )
     }
 }
 

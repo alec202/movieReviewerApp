@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "852854974886",
+    "project_id": "jetpack-1694a",
+    "storage_bucket": "jetpack-1694a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852854974886:android:34dea8939b633f0da50767",
+        "android_client_info": {
+          "package_name": "com.example.movierecommenderapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfJoxlZBzT_m2C5eZLZ7fCP_39_JHnmVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
