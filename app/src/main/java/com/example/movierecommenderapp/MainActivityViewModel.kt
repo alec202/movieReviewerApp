@@ -22,4 +22,8 @@ class MainActivityViewModel: ViewModel() {
         }
     }
 
+    fun search(title: String){
+
+    }
+
 }
