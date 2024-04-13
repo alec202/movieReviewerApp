@@ -9,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
 
@@ -40,13 +46,14 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .background(Color.Yellow)
                             .fillMaxSize()
+                        // center eveyrthing vertically
+                        , horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        BasicTextField(value = "Search for a movie to add", readOnly = true, onValueChange = {}, modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .fillMaxWidth(1f))
-                        Button(onClick = { /*TODO*/ }, content = Text) {
-
-                        }
+                        // tell the user
+                        BasicTextField(value = "Search for a movie to add", readOnly = true, onValueChange = {}, modifier = Modifier)
+//                        Button(onClick = { /*TODO*/ }, content = Text) {
+//
+//                        }
                         Greeting("Android")
                         buttonToLaunchUserMovieScreen()
                         buttonToLogout()
@@ -65,6 +72,22 @@ class MainActivity : ComponentActivity() {
         vm.uid.value = intent.getStringExtra("uid")
     }
 
+    @Composable
+    fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
+        LazyRow{
+            items(movieList.size){
+                Text(
+                    text = movieList[it].movieName,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .width(80.dp) // need to test this line and see if it's doing what
+                    // we think it's doing
+                )
+            }
+        }
+    }
 
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
@@ -78,8 +101,9 @@ class MainActivity : ComponentActivity() {
     fun buttonToLaunchUserMovieScreen() {
         Button(
             onClick = {
-                val toUserMovies = Intent(this, LoginActivity::class.java)
-                startActivity(toUserMovies)
+//                val toUserMovies = Intent(this, LoginActivity::class.java)
+//                startActivity(toUserMovies)
+                      finish()
             }, content = {
                 Text("Go to Second screen")
             })

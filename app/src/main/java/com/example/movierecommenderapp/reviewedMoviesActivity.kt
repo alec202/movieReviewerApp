@@ -55,13 +55,9 @@ fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
                 modifier = Modifier
                     .width(80.dp) // need to test this line and see if it's doing what
                 // we think it's doing
-
-
-
             )
         }
     }
-
 }
 
 @Preview(showBackground = true)
