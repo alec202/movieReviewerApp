@@ -101,9 +101,9 @@ class MainActivity : ComponentActivity() {
     fun buttonToLaunchUserMovieScreen() {
         Button(
             onClick = {
-//                val toUserMovies = Intent(this, LoginActivity::class.java)
-//                startActivity(toUserMovies)
-                      finish()
+                val toUserMovies = Intent(this, reviewedMoviesActivity::class.java)
+                finish()
+                startActivity(toUserMovies)
             }, content = {
                 Text("Go to Second screen")
             })

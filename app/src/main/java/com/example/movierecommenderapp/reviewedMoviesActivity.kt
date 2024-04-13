@@ -41,24 +41,9 @@ class reviewedMoviesActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
-    LazyRow{
-        items(movieList.size){
-            Text(
-                text = movieList[it].movieName,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .width(80.dp) // need to test this line and see if it's doing what
-                // we think it's doing
-            )
-        }
-    }
-}
+} // end of reviewedMoviesActivity Class
+
 
 @Preview(showBackground = true)
 @Composable
