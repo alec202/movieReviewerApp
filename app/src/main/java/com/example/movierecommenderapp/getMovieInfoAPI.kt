@@ -12,8 +12,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-//
-// API to be used: https://random-word-api.herokuapp.com/word
 
 val logInterceptor = HttpLoggingInterceptor()
 interface movieAPI{
@@ -32,7 +30,7 @@ interface movieAPI{
     ): Response<ApiResponse>
 }
 
-object wordClient{
+object movieInfoClient{
     val BASE_URL = "https://api.themoviedb.org/3/"
     val okHttpClientBuilder = OkHttpClient.Builder()
 
