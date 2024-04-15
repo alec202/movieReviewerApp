@@ -22,11 +22,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Column
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 class reviewedMoviesActivity : ComponentActivity() {
+    val vm: reviewedMoviesViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val showNamePassed = intent.getStringExtra("showName")
+//        vm.getmovieInfo("Taken")
+
+
         setContent {
             MovieRecommenderAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -36,33 +43,15 @@ class reviewedMoviesActivity : ComponentActivity() {
                 ) {
                     Column {
                         Text("Test")
+                        vm.getmovieInfo("Taken")
                     }
                 }
             }
         }
     }
-}
 
-@Composable
-fun displayWatchedMovies(movieList: ArrayList<movieInfo>) {
-    LazyRow{
-        items(movieList.size){
-            Text(
-                text = movieList[it].movieName,
-                fontSize = 30.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .width(80.dp) // need to test this line and see if it's doing what
-                // we think it's doing
+} // end of reviewedMoviesActivity Class
 
-
-
-            )
-        }
-    }
-
-}
 
 @Preview(showBackground = true)
 @Composable
