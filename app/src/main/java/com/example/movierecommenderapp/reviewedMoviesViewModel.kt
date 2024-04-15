@@ -10,13 +10,12 @@ import edu.gvsu.cis.wordguess.movieInfoClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class reviewedMoviesViewModel(showName: String): ViewModel() {
+class reviewedMoviesViewModel(): ViewModel() {
     val apiEndpoint: movieAPI
-    val movieName = showName
+    var movieName: String = ""
 
     init {
         apiEndpoint = movieInfoClient.getInstance().create(movieAPI::class.java)
-        getmovieInfo(movieName)
     }
 
 //    viewModelScope.launch(Dispatchers.IO) {
@@ -36,8 +35,14 @@ class reviewedMoviesViewModel(showName: String): ViewModel() {
                 true,
                 "en-US",
                 1)
-            // now need to deconstruct varible for the info returned
+            // now need to deconstruct variable for the info returned
             // from the api
+            returnedMovieInfos.body().let {
+                if (it != null){
+                    Log.d("APIReturnedValues", "$it")
+
+                }
+            }
 
 
         }

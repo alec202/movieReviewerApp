@@ -15,10 +15,10 @@ import retrofit2.http.Query
 
 val logInterceptor = HttpLoggingInterceptor()
 interface movieAPI{
+
     @Headers(
         "accept: application/json",
-        "Authorization",
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzY2U4MTFiMjc4NDMxNDAwYmJjMWYzNDhhMWM2ZDZmYyIsInN1YiI6IjY1ZjA1M2ZmMWY3NDhiMDBjNzUwOWVjMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PjlOGtLwSRvtnYBDW-MNpZdbfpQ3TfB4cnsrGyTR_U0"
+        "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzY2U4MTFiMjc4NDMxNDAwYmJjMWYzNDhhMWM2ZDZmYyIsInN1YiI6IjY1ZjA1M2ZmMWY3NDhiMDBjNzUwOWVjMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PjlOGtLwSRvtnYBDW-MNpZdbfpQ3TfB4cnsrGyTR_U0"
     )
 
     @GET("search/multi")

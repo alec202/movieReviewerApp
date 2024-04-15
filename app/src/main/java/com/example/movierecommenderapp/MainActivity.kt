@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
         LazyRow{
             items(movieList.size){
                 Text(
-                    text = movieList[it].movieName,
+                    text = movieList[it].name,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
