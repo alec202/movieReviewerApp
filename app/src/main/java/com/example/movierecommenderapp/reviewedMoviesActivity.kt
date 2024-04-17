@@ -22,6 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.LiveData
+
+
+
 
 class reviewedMoviesActivity : ComponentActivity() {
     val vm: reviewedMoviesViewModel by viewModels()
@@ -30,6 +36,7 @@ class reviewedMoviesActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 //        val showNamePassed = intent.getStringExtra("showName")
 //        vm.getmovieInfo("Taken")
+        val apiSuccess by vm.movieFetchSuccess.observeAsState()
 
 
         setContent {
@@ -41,12 +48,25 @@ class reviewedMoviesActivity : ComponentActivity() {
                 ) {
                     Column {
                         Text("Test")
-                        vm.getmovieInfo("Taken")
+                        vm.movieName = intent.getStringExtra("title")!!
+                        vm.getmovieInfo(vm.movieName)
+                        vm.movieFetchSuccess.observe(this){
+
+                        }
                     }
                 }
             }
         }
     }
+
+    @Composable
+    fun displayFirstOption(){
+        TextField(
+            value = """Title: ${vm.top3Results[0].title}
+                |Description: ${vm.top3Results[0].overview}
+            """.trimMargin(), onValueChange = { }, enabled = false)
+    }
+
 
 } // end of reviewedMoviesActivity Class
 
