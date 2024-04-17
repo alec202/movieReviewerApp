@@ -50,9 +50,9 @@ class reviewedMoviesActivity : ComponentActivity() {
                         Text("Test")
                         vm.movieName = intent.getStringExtra("title")!!
                         vm.getmovieInfo(vm.movieName)
-                        vm.movieFetchSuccess.observe(this){
-
-                        }
+//                        vm.movieFetchSuccess.observe(this){
+//
+//                        }
                     }
                 }
             }
