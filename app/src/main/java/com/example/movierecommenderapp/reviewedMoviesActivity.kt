@@ -36,7 +36,7 @@ class reviewedMoviesActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 //        val showNamePassed = intent.getStringExtra("showName")
 //        vm.getmovieInfo("Taken")
-        val apiSuccess by vm.movieFetchSuccess.observeAsState()
+//        val apiSuccess by vm.movieFetchSuccess.observeAsState()
 
 
         setContent {
