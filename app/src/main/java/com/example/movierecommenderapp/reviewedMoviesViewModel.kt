@@ -67,7 +67,7 @@ class reviewedMoviesViewModel(): ViewModel() {
                     // we now populated the top 3 results.
                     // We now have everything we need, so getting the results of the top 3
                     // responses was a success.
-                    _movieFetchSuccess.postValue(true)
+                    _movieFetchSuccess.value = true
                 }
             }
         }

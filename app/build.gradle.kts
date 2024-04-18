@@ -99,6 +99,12 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-livedata:1.6.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.material:material:1.6.6")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.6")
+
+
+
+
 
 
 
