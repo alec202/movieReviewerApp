@@ -12,6 +12,10 @@ import edu.gvsu.cis.wordguess.movieInfoClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
+import androidx.compose.runtime.LaunchedEffect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
 
 
 
@@ -19,8 +23,8 @@ class reviewedMoviesViewModel(): ViewModel() {
     val apiEndpoint: movieAPI
     var movieName: String = ""
     var listOfResults: List<Result> = listOf()
-    private val _movieFetchSuccess: MutableLiveData<Boolean?> = MutableLiveData(null)
-    val movieFetchSuccess: LiveData<Boolean?> get() = _movieFetchSuccess
+    private val _movieFetchSuccess =  MutableStateFlow(false)
+    val movieFetchSuccess  = _movieFetchSuccess.asStateFlow()
     val top3Results: MutableList<Result> = mutableListOf()
 
 
