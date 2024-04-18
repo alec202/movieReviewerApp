@@ -75,39 +75,50 @@ class LoginActivity : ComponentActivity() {
             mutableStateOf("")
         }
 
+        // variable for showing/hiding user password, usual function
         var showPass by remember { mutableStateOf(value = false) }
 
 
+        // Beginning of composable structure
         Column(
+            // makes it so that elements take up entire width, elements are centered horizontally
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
+            
+            // Blankspace
             Spacer(modifier = Modifier.height(90.dp))
 
+            // Our logo. Totally not from a random internet source
             Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo")
 
+            // This is the email text field. Updates userEmail var and viewModel var.
             OutlinedTextField(value = userEmail, onValueChange = {
                 userEmail = it
                 vm.noEmail.value = it
 
+                // Hint text
             }, label = {
-                Text(text = "Email")
+                Text(text = "Valid Email Address")
             })
 
+            // More whitespace
             Spacer(modifier = Modifier.height(20.dp))
 
+            // This is the password text field. Updates userPass var and viewModel var.
             OutlinedTextField(value = userPass, onValueChange = {
                 userPass = it
                 vm.noPass.value = it
+
+                // Hint text
             }, label = {
-                Text(text = "Password")
+                Text(text = "Password - 6+ chars")
             }, visualTransformation = if (showPass) {
                 VisualTransformation.None
             } else {
                 PasswordVisualTransformation()
             },
-                trailingIcon = {
+                trailingIcon = { //Here is where I add the icon that allows you to show the password
                     if (showPass) {
                         IconButton(onClick = { showPass = false }) {
                             Icon(
@@ -126,8 +137,10 @@ class LoginActivity : ComponentActivity() {
                     }
                 })
 
+            // More blankspace
             Spacer(modifier = Modifier.height(60.dp))
 
+            // Row at bottom that allows you to choose whether you want to log into an existing account or make a new one.
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
@@ -153,6 +166,7 @@ class LoginActivity : ComponentActivity() {
 
         }
 
+        // Print message to diagnose why login isn't working
         vm.msg.observe(this) {
             it?.let {
                 if (it.length > 0) {
@@ -161,6 +175,7 @@ class LoginActivity : ComponentActivity() {
             }
         }
 
+        // Goes to main page when the uid has changed
         vm.uid.observe(this) {
             // When the UID is not null, we transition to the main screen
             it?.let {
@@ -174,12 +189,14 @@ class LoginActivity : ComponentActivity() {
 
     }
 
+    // Login function. Ensures no app crash if they are empty
     fun loginNow() {
         if (vm.noEmail.value != "" && vm.noPass.value != "") {
             vm.login(vm.noEmail.value!!, vm.noPass.value!!)
         }
     }
 
+    // Create account function. Ensures no app crash if they are empty
     fun createAccount() {
         if (vm.noEmail.value != "" && vm.noPass.value != "") {
             vm.newAccount(vm.noEmail.value!!, vm.noPass.value!!)
