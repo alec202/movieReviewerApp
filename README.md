@@ -3,3 +3,6 @@ Group project to create movie recommender app for Android devices. It will be im
 
 THIS IS A TEST, MODIFYING ONLY THE README
 test 2
+
+Test again
+Test again
