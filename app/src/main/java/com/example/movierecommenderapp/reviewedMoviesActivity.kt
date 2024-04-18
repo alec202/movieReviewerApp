@@ -6,42 +6,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
-import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.TextField
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.MutableStateFlow
 //import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 //import androidx.compose.runtime.collectAsStateWithLifecycle
 
@@ -70,10 +48,11 @@ class reviewedMoviesActivity : ComponentActivity() {
 
 //                    val apiSuccess by vm.movieFetchSuccess.observeAsState()
                     Column {
-                        displayFirstOption(apiFetchSuccess)
-                        displaySecondOption(apiFetchResult = apiFetchSuccess)
-                        displayThirdOption(apiFetchResult = apiFetchSuccess)
-                        displayThirdOption(apiFetchResult = apiFetchSuccess)
+//                        displayFirstOption(apiFetchSuccess)
+//                        displaySecondOption(apiFetchResult = apiFetchSuccess)
+//                        displayThirdOption(apiFetchResult = apiFetchSuccess)
+//                        displayThirdOption(apiFetchResult = apiFetchSuccess)
+                        displayTop3Results(apiFetchResult = apiFetchSuccess)
 
                     }
                 }
@@ -97,17 +76,51 @@ class reviewedMoviesActivity : ComponentActivity() {
 
 
     @Composable
+    fun displayTop3Results(apiFetchResult: Boolean){
+        if (apiFetchResult) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.40f)
+            ) {
+                items(3) {
+                    var currentOption = vm.top3Results[it]
+                    if (currentOption.title != null) {
+                        TextField(
+                            value = """Title: ${currentOption.title}
+                    |Description: ${currentOption.overview}
+                """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
+                                .fillMaxWidth(1f)
+                                .fillMaxHeight(0.40f)
+                        )
+                    } else {
+                        TextField(
+                            value = """Title: ${currentOption.original_name}
+                |Description: ${currentOption.overview}
+            """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
+                                .fillMaxWidth(1f)
+                                .fillMaxHeight(0.40f)
+                        )
+                    }
+
+
+
+                }
+            }
+        }
+    }
+    @Composable
     fun displayFirstOption(apiFetchResult: Boolean){
         if (apiFetchResult) {
 //            onSucc
             val firstOption = vm.top3Results[0]
-            if (firstOption.title != null){
-            TextField(
-                value = """Title: ${vm.top3Results[0].title}
-                |Description: ${vm.top3Results[0].overview}
-            """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
-                    .fillMaxWidth(1f)
-            )
+            if (firstOption.title != null) {
+                TextField(
+                    value = """Title: ${vm.top3Results[0].title}
+                    |Description: ${vm.top3Results[0].overview}
+                """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
+                        .fillMaxWidth(1f)
+                )
             } else {
                 TextField(
                     value = """Title: ${vm.top3Results[0].original_name}
@@ -115,7 +128,6 @@ class reviewedMoviesActivity : ComponentActivity() {
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
                         .fillMaxWidth(1f)
                 )
-
             }
         }
     }
@@ -125,14 +137,14 @@ class reviewedMoviesActivity : ComponentActivity() {
         if (apiFetchResult){
             val secondOption = vm.top3Results[1]
             if (secondOption.title != null) {
-                TextField(
+               return TextField(
                     value = """Title: ${vm.top3Results[1].title}
                 |Description: ${vm.top3Results[1].overview}
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
                         .fillMaxWidth(1f)
                 )
             } else {
-                TextField(
+                return TextField(
                     value = """Title: ${vm.top3Results[1].original_name}
                 |Description: ${vm.top3Results[1].overview}
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
@@ -148,7 +160,7 @@ class reviewedMoviesActivity : ComponentActivity() {
         if (apiFetchResult){
             val thirdResult = vm.top3Results[2]
             if (thirdResult.title != null) {
-                TextField(
+                return TextField(
                     value = """Title: ${vm.top3Results[2].title}
                 |Description: ${vm.top3Results[2].overview}
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
@@ -156,7 +168,7 @@ class reviewedMoviesActivity : ComponentActivity() {
                         .clickable { Log.d("apiReturnedValues", "ClickedThird ") }
                 )
             } else {
-                TextField(
+                return TextField(
                     value = """Title: ${vm.top3Results[2].original_name}
                 |Description: ${vm.top3Results[2].overview}
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
