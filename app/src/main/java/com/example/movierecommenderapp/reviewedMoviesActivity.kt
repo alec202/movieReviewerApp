@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -77,15 +78,23 @@ class reviewedMoviesActivity : ComponentActivity() {
                         displayTop3Results(apiFetchResult = apiFetchSuccess)
                         Spacer(modifier = Modifier.size(30.dp))
                         askForRating()
-                        Spacer(modifier = Modifier.size(40.dp))
+                        Spacer(modifier = Modifier.size(30.dp))
+                        askWhichListToAddMovieTo()
+                        Spacer(modifier = Modifier.size(30.dp))
                         displayButtons(apiFetchSuccess)
-
                     }
                 }
             }
         }
     }
 
+
+    @Composable
+    fun askWhichListToAddMovieTo(){
+        Text(text = "Pick the button for the list you want to add this movie to!",
+            fontSize = 25.sp,
+            modifier = Modifier.fillMaxWidth(1f))
+    }
 
     @Composable
     fun askForRating() {
@@ -120,13 +129,24 @@ class reviewedMoviesActivity : ComponentActivity() {
     fun displayButtons(apiFetchResult: Boolean){
         // If that movie generated no results, then we shouldn't allow them to add it to favorites
         if (apiFetchResult){
-            Row {
+            Row(horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(1f)
+            ) {
                 Button(onClick = {
                     var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked])
                     packIntoIntentAndFinish(movieInMovieInfoFormat)
                 }) {
-                    Text("Add to your already watched list")
+                    Text("Already Watched List")
                 }
+                Button(onClick = {
+                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked])
+                    packIntoIntentAndFinish(movieInMovieInfoFormat)
+                }) {
+                    // I'll have to unpack and determine the media type and
+                    // send to the correct array.
+                    Text("Favorites List")
+                }
+
 
             }
 
