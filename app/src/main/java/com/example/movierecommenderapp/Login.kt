@@ -2,6 +2,7 @@ package com.example.movierecommenderapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.AndroidException
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,18 +18,31 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 //import com.google.android.material.snackbar.Snackbar
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : ComponentActivity() {
@@ -39,28 +53,9 @@ class LoginActivity : ComponentActivity() {
         setContent {
             Login()
         }
-        var email = ""
 
-        vm.uid.observe(this) {
-            // When the UID is not null, we transition to the main screen
-            it?.let {
-                val toMain = Intent(this, MainActivity::class.java)
-                toMain.putExtra("uid", vm.uid.value)
-                toMain.putExtra("username", "N/A")
-                startActivity(toMain)
-                finish()
-            }
-        }
 
-        vm.msg.observe(this) {
-            it?.let {
-                if (it.length > 0) {
-                }
-            }
-        }
     }
-
-
     @Composable
     fun Login() {
 
@@ -70,6 +65,9 @@ class LoginActivity : ComponentActivity() {
         var userPass by remember {
             mutableStateOf("")
         }
+
+        var showPass by remember { mutableStateOf(value = false) }
+
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -95,7 +93,29 @@ class LoginActivity : ComponentActivity() {
                 vm.noPass.value = it
             }, label = {
                 Text(text = "Password")
-            }, visualTransformation = PasswordVisualTransformation())
+            }, visualTransformation = if (showPass) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
+            },
+                trailingIcon = {
+                    if (showPass) {
+                        IconButton(onClick = { showPass = false }) {
+                            Icon(
+                                imageVector = Icons.Filled.Visibility,
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = { showPass = true }) {
+                            Icon(
+                                imageVector = Icons.Filled.VisibilityOff,
+                                contentDescription = "hide_password"
+                            )
+                        }
+                    }
+                })
 
             Spacer(modifier = Modifier.height(60.dp))
 
@@ -104,7 +124,7 @@ class LoginActivity : ComponentActivity() {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Button(
-                    onClick = {loginNow()},
+                    onClick = { loginNow() },
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
                         .size(width = 135.dp, height = 50.dp)
@@ -112,7 +132,7 @@ class LoginActivity : ComponentActivity() {
                     Text(text = "Log In")
                 }
                 Button(
-                    onClick = {createAccount()},
+                    onClick = { createAccount() },
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
                         .size(width = 135.dp, height = 50.dp)
@@ -123,18 +143,39 @@ class LoginActivity : ComponentActivity() {
 
 
         }
+
+        vm.msg.observe(this) {
+            it?.let {
+                if (it.length > 0) {
+                    println("Unable to login $it")
+                }
+            }
+        }
+
+        vm.uid.observe(this) {
+            // When the UID is not null, we transition to the main screen
+            it?.let {
+                val toMain = Intent(this, MainActivity::class.java)
+                toMain.putExtra("uid", vm.uid.value)
+                toMain.putExtra("username", "N/A")
+                startActivity(toMain)
+                finish()
+            }
+        }
+
     }
 
     fun loginNow() {
-        if (vm.noEmail.value != "" && vm.noPass.value != ""){
+        if (vm.noEmail.value != "" && vm.noPass.value != "") {
             vm.login(vm.noEmail.value!!, vm.noPass.value!!)
         }
     }
 
     fun createAccount() {
-        val toCreate = Intent(this, NewAccount::class.java)
-        startActivity(toCreate)
-        finish()
+        if (vm.noEmail.value != "" && vm.noPass.value != "") {
+            vm.newAccount(vm.noEmail.value!!, vm.noPass.value!!)
+        }
     }
+
 
 }
