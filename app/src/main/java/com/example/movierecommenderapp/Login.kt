@@ -1,5 +1,6 @@
 package com.example.movierecommenderapp
 
+// IMPORTS
 import android.content.Intent
 import android.os.Bundle
 import android.util.AndroidException
@@ -45,23 +46,31 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 
+// Implements the activity
 class LoginActivity : ComponentActivity() {
     val vm: LoginViewModel by viewModels()
 
+    // OnCreate functions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Sets the content of the page as the login composable
         setContent {
             Login()
         }
 
 
     }
+
+    // Beginning of Login composable function
     @Composable
     fun Login() {
 
+        // username variable. Uses by remember so Jetpack Compose can keep the variables.
         var userEmail by remember {
             mutableStateOf("")
         }
+        // password variable. Uses by remember so Jetpack Compose can keep the variables.
         var userPass by remember {
             mutableStateOf("")
         }
