@@ -26,6 +26,7 @@ class reviewedMoviesViewModel(): ViewModel() {
     private val _movieFetchSuccess =  MutableStateFlow(false)
     val movieFetchSuccess  = _movieFetchSuccess.asStateFlow()
     val top3Results: MutableList<Result> = mutableListOf()
+    var indexPicked = 0
 
 
 

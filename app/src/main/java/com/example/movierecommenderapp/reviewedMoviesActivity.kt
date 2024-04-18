@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +27,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 //import androidx.compose.runtime.collectAsStateWithLifecycle
 
@@ -58,6 +60,14 @@ class reviewedMoviesActivity : ComponentActivity() {
 //                        displaySecondOption(apiFetchResult = apiFetchSuccess)
 //                        displayThirdOption(apiFetchResult = apiFetchSuccess)
 //                        displayThirdOption(apiFetchResult = apiFetchSuccess)
+                        // display textbox prompting them to click the option they want
+                        Text("Click the option you want to add to a list: ",
+                            fontSize = 25.sp,
+                            modifier = Modifier
+                                .fillMaxWidth(1f)
+                        )
+                        Spacer(modifier = Modifier.size(25.dp))
+                        // Display the recyclerView with top 3 options
                         displayTop3Results(apiFetchResult = apiFetchSuccess)
                         Spacer(modifier = Modifier.size(20.dp))
                         displayButtons(apiFetchSuccess)
@@ -86,6 +96,11 @@ class reviewedMoviesActivity : ComponentActivity() {
     fun displayButtons(apiFetchResult: Boolean){
         // If that movie generated no results, then we shouldn't allow them to add it to favorites
         if (apiFetchResult){
+            Row {
+                Button(onClick = { /*TODO*/ }) {
+
+                }
+            }
 
         } else{
             displayNoResultsButton()
@@ -115,6 +130,10 @@ class reviewedMoviesActivity : ComponentActivity() {
                 """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
                                 .fillMaxWidth(1f)
                                 .fillMaxHeight(0.40f)
+                                .clickable {
+                                    vm.indexPicked = it
+                                    Log.d("ButtonClickYes", "${vm.indexPicked}")
+                                }
                         )
                     } else {
                         TextField(
@@ -123,6 +142,10 @@ class reviewedMoviesActivity : ComponentActivity() {
             """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
                                 .fillMaxWidth(1f)
                                 .fillMaxHeight(0.40f)
+                                .clickable {
+                                    vm.indexPicked = it
+                                    Log.d("ButtonClickYes", "${vm.indexPicked}")
+                                }
                         )
                     }
 
