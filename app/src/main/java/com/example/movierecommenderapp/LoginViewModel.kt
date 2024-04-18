@@ -34,4 +34,15 @@ class LoginViewModel: ViewModel() {
                 }
         }
     }
+    fun newAccount(email:String, password: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    _uid.postValue(it.user?.uid)
+                }
+                .addOnFailureListener {
+                    _msg.postValue(it.message)
+                }
+        }
+    }
 }
