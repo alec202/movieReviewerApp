@@ -14,13 +14,19 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 //import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.material.Surface
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.dp
+
 //import androidx.compose.runtime.collectAsStateWithLifecycle
 
 
@@ -53,6 +59,8 @@ class reviewedMoviesActivity : ComponentActivity() {
 //                        displayThirdOption(apiFetchResult = apiFetchSuccess)
 //                        displayThirdOption(apiFetchResult = apiFetchSuccess)
                         displayTop3Results(apiFetchResult = apiFetchSuccess)
+                        Spacer(modifier = Modifier.size(20.dp))
+                        displayButtons(apiFetchSuccess)
 
                     }
                 }
@@ -74,7 +82,22 @@ class reviewedMoviesActivity : ComponentActivity() {
 //        }
 //    }
 
+    @Composable
+    fun displayButtons(apiFetchResult: Boolean){
+        // If that movie generated no results, then we shouldn't allow them to add it to favorites
+        if (apiFetchResult){
 
+        } else{
+            displayNoResultsButton()
+        }
+    }
+
+    @Composable
+    fun displayNoResultsButton(){
+        Button(onClick = {finish()}) {
+            Text(text = "Back To Main Screen")
+        }
+    }
     @Composable
     fun displayTop3Results(apiFetchResult: Boolean){
         if (apiFetchResult) {
@@ -103,12 +126,12 @@ class reviewedMoviesActivity : ComponentActivity() {
                         )
                     }
 
-
-
                 }
             }
         }
     }
+
+
     @Composable
     fun displayFirstOption(apiFetchResult: Boolean){
         if (apiFetchResult) {

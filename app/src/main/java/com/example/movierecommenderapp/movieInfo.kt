@@ -7,6 +7,6 @@ package com.example.movierecommenderapp
 // stuff on firebase it will be this an Array of this class
 data class movieInfo(
     val name: String,
-    var audienceRating: Double,
-    var userRating: Double
+    var userRating: Double,
+    val description: String
     )

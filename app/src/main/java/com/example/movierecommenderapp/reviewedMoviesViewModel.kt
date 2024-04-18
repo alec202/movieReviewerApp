@@ -58,16 +58,23 @@ class reviewedMoviesViewModel(): ViewModel() {
             returnedMovieInfos.body().let {
                 if (it != null) {
                     listOfResults = it.results
-                    Log.d("apiReturnedValues", "${listOfResults.size}")
-                    Log.d("apiReturnedValues", "${listOfResults}")
-                    Log.d("ApireturnedValues", "${listOfResults[0].title}")
-                    top3Results.add(listOfResults[0])
-                    top3Results.add(listOfResults[1])
-                    top3Results.add(listOfResults[2])
-                    // we now populated the top 3 results.
-                    // We now have everything we need, so getting the results of the top 3
-                    // responses was a success.
-                    _movieFetchSuccess.value = true
+                    // If the movie searched generated no results. we want to update
+                    // MovieFetchSuccess appropriatelly.
+                    if (listOfResults.size == 0){
+                        _movieFetchSuccess.value = false
+                    }
+                    if (listOfResults.size >= 1) {
+                        Log.d("apiReturnedValues", "${listOfResults.size}")
+                        Log.d("apiReturnedValues", "${listOfResults}")
+                        Log.d("ApireturnedValues", "${listOfResults[0].title}")
+                        top3Results.add(listOfResults[0])
+                        top3Results.add(listOfResults[1])
+                        top3Results.add(listOfResults[2])
+                        // we now populated the top 3 results.
+                        // We now have everything we need, so getting the results of the top 3
+                        // responses was a success.
+                        _movieFetchSuccess.value = true
+                    }
                 }
             }
         }
