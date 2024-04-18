@@ -1,5 +1,6 @@
 package com.example.movierecommenderapp
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,6 +28,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.material.Surface
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -69,7 +75,9 @@ class reviewedMoviesActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.size(25.dp))
                         // Display the recyclerView with top 3 options
                         displayTop3Results(apiFetchResult = apiFetchSuccess)
-                        Spacer(modifier = Modifier.size(20.dp))
+                        Spacer(modifier = Modifier.size(30.dp))
+                        askForRating()
+                        Spacer(modifier = Modifier.size(40.dp))
                         displayButtons(apiFetchSuccess)
 
                     }
@@ -78,28 +86,48 @@ class reviewedMoviesActivity : ComponentActivity() {
         }
     }
 
-//    @Composable
-//    fun DisplayMovieScreen(vm: reviewedMoviesViewModel) {
-//        var movieFetchSuccess by remember {  }
-//
-//        // Use LaunchedEffect to observe changes in movieFetchSuccess
-//        LaunchedEffect(movieFetchSuccess) {
-//            if (movieFetchSuccess == true) {
-//                displayFirstOption(vm)
-//            }
-//        }
-//
-//        }
-//    }
 
+    @Composable
+    fun askForRating() {
+        var text by remember { mutableStateOf("") }
+        val thisContext = LocalContext.current
+        val thisActivity = thisContext as? Activity
+        Text(text = "Enter a rating:", modifier = Modifier.fillMaxWidth(1f))
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("User Rating") },
+            modifier = Modifier
+                .fillMaxWidth(1f)
+        )
+    }
+
+
+    fun bundleUpForIntentPassing(moviePicked: Result): movieInfo{
+        var movieName = ""
+        if (moviePicked.title != null){
+            return movieInfo("", 3.3, "")
+        } else {
+            return movieInfo("", 3.3, "")
+
+        }
+
+    }
+    fun packIntoIntentAndFinish(moviePicked: movieInfo){
+
+    }
     @Composable
     fun displayButtons(apiFetchResult: Boolean){
         // If that movie generated no results, then we shouldn't allow them to add it to favorites
         if (apiFetchResult){
             Row {
-                Button(onClick = { /*TODO*/ }) {
-
+                Button(onClick = {
+                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked])
+                    packIntoIntentAndFinish(movieInMovieInfoFormat)
+                }) {
+                    Text("Add to your already watched list")
                 }
+
             }
 
         } else{
