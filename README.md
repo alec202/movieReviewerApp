@@ -37,7 +37,7 @@ As you can see, the UI consists of a logo, two text fields, and two buttons. Her
 
 In the beginning of the app, you need to import the following libraries to create the Jetpack Compose UI:
 
-```
+```kotlin
 
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
