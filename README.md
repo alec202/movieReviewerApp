@@ -407,8 +407,108 @@ fun displayNoResultsButton(){
 ```
 
 The function I just mentioned here is implemented, and as we said, it's really simple. It just displays that "Back To Main Screen" button, since there aren't any results from the API
-<br>
+
 **Step 6: Composable function for displaying the top 3 results from the API**
+
+```kotlin
+
+@Composable
+fun displayTop3Results(apiFetchResult: Boolean){
+    if (apiFetchResult) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.40f)
+        ) {
+            items(3) {
+                var currentOption = vm.top3Results[it]
+                if (currentOption.title != null) {
+                    TextField(
+                        value = """Title: ${currentOption.title}
+                |Description: ${currentOption.overview}
+            """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .fillMaxHeight(0.40f)
+                            .clickable {
+                                 vm.indexPicked = it
+                                   Log.d("ButtonClickYes", "${vm.indexPicked}")
+                             }
+                    )
+                } else {
+                    TextField(
+                        value = """Title: ${currentOption.original_name}
+            |Description: ${currentOption.overview}
+        """.trimMargin(), onValueChange = { }, enabled = false, modifier = Modifier
+                            .fillMaxWidth(1f)
+                             .fillMaxHeight(0.40f)
+                            .clickable {
+                                  vm.indexPicked = it
+                                   Log.d("ButtonClickYes", "${vm.indexPicked}")
+                             }
+                    )
+                }
+
+            }
+        }
+     }
+}
+
+```
+
+Another long function, but the explanation is fast again. Lazy Column implements a vertically scrolling menu. We make the contents in this lazy column take up the entire width and fourty percent of the height of the display. 
+We then combine Compose and API functions to show the listings' title and description through a text field. If the user clicks on this field, we can select it, for adding to certain lists. As the name suggests,
+this displays the top three results from the API, as to not make the lazy column extremely long. 
+Again, very simple, using a lot of API functions and very few Compose functions.
+
+**Step 7: Composable function for page theme**
+
+```kotlin
+
+@Composable
+fun displayWatchedMoviesPreview() {
+    MovieRecommenderAppTheme {
+//        displayWatchedMovies()
+    }
+}
+
+```
+
+Here, we are simply showing the theme of the page as the MovieRecommenderAppTheme. We go over this in the section before. Themes can be extremely helpful for adding consistency to your app!
+
+**Step 8: Set the content of the activity**
+
+```kotlin
+
+setContent {
+    MovieRecommenderAppTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+
+        ) {
+            Column {
+                Text("Click the option you want to add to a list: ",
+                    fontSize = 25.sp,
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                )
+                Spacer(modifier = Modifier.size(25.dp))
+                // Display the recyclerView with top 3 options
+                displayTop3Results(apiFetchResult = apiFetchSuccess)
+                Spacer(modifier = Modifier.size(30.dp))
+                askForRatingandShowButtons(apiFetchSuccess)
+            }
+        }
+    }
+}
+
+```
+
+Here, we first apply the theme. Then, we use Surface to create a container for the content. In this container, we implement the remaining Composable functions from before, essentially building it all together. We also add an extra line of text,
+as well as some spacers. 
+
+This code block right here really highlights just how amazing Jetpack Compose can be. We really built this all like a giant Lego project. We can combine pieces in certain steps, and at the end, we combine everything and put on the finishing touches.
 
 
 # Conclusion
