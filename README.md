@@ -114,6 +114,9 @@ Column(
 }
 ```
 
+This column structure helps organize all of our UI elements. Before the actual function arguments, in the parentheses we can add certain modifiers.
+
+Here, we ensure that the elements are centered horizontally and are also taking up the entire width of the viewport. All of our elements will go in this function.
 
 ## Movie Selection UI
 
