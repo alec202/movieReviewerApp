@@ -4,7 +4,18 @@ This app was created by Jacob, Alec, and Catherine. Development ended on April 1
 
 # Overview
 For this project, our focus area is Jetpack Compose. Jetpack compose is the recommended modern toolkit for UI building with Android Studio. In fact, these days, when you go
-and try to look
+and try to look up documentation on UI creation, Android will almost always direct you to solutions using Jetpack Compose. XML is a very outdated way of UI creation, and
+Jetpack Compose just has so many options, such as live previewing, UI building from straight code, easy functions, and many, many libraries to improve functionality.
+
+Our idea for this app was to have a nice way for users to be exposed to the powers of Jetpack Compose. We wanted to focus on an app concept that is very reliant on
+a good user interface. We found a nice, free API for movie searching (TMDB API) and got to work!
+
+Our app has many functions. First of all, users can create accounts and login on the landing page - the login page. After logging in with Firebase auth, the user can search up movies
+with a search bar directly in our app. The user can then scroll through results from the API and rate the movies, or even add the movie to their unique lists, such as watched movies,
+favorite movies, or favorite shows. Users will have their data saved to firebase as well, keeping results even after logging out!
+
+Here is a video demo of our app!
+
 
 # Getting started
 
