@@ -29,7 +29,8 @@ In the login section, the user can login through Firebase Authentication, either
 
 Here is the finished UI:
 
-![image](https://github.com/alec202/movieReviewerApp/assets/117123349/8016fb09-c343-49e4-8ef3-3a9f1099d6f1)
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/ff3aaec2-ab60-462f-a190-5ce771236760)
+
 
 
 ## Movie Selection UI
