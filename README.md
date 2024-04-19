@@ -255,7 +255,9 @@ And with this we are completely finished with our login. See the "Conclusion" se
 
 
 
-## Movie Selection UI
+## Main Screen
+
+## Movie Information Screen
 
 # Conclusion
 
