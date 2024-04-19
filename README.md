@@ -17,7 +17,7 @@ API things we do. We won't go over any API stuff in this demo, rather focusing o
 
 ![image](https://github.com/alec202/movieReviewerApp/assets/117123349/3d915105-11f8-406f-979d-2d57d4f7a6b1)
 
-**NOTE: There aren't any separate installations you need for this project. Jetpack Compose is fully supported by Android Studio
+**NOTE: There aren't any separate installations you need for this project. Jetpack Compose is fully supported by Android Studio.
 Additionally, some of these dependencies are for things that we won't go over with this demo, such as firebase dependencies**
 
 
