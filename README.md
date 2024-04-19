@@ -257,7 +257,14 @@ And with this we are completely finished with our login. See the "Conclusion" se
 
 ## Main Screen
 
-## Movie Information Screen
+## Movie/Show Information Screen
+
+Lastly, there is our movie & show info screen. After searching, the user is directed here. You can scroll through the results, which includes a title and description of each listing. After clicking on a specific listing, you can 
+add it to your lists, and you can even enter a user rating. Of course, we will focus on the UI elements, since a lot of this is just TMDB API:
+
+![1](https://github.com/alec202/movieReviewerApp/assets/117123349/fd005668-6ff8-4c8a-ac70-01e81c0c9d1b)
+
+Here is the screen layout. Now, I will go over the steps.
 
 # Conclusion
 
