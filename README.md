@@ -259,6 +259,13 @@ And with this we are completely finished with our login. See the "Conclusion" se
 
 # Conclusion
 
+This concludes our tutorial to create our movie selection app! Users can log in or create a new account, browse movies with the TMDB API, as well as add movies to their watch list, favorite movies list, and favorite tv shows list.
+
+Here you can see [our repo](https://github.com/alec202/movieReviewerApp)
+
+There are various different ways to code this, as Jetpack Compose is extremely extensive, and is now the preferred way for developers to format UI in android studio. We use many different elements of compose in
+our project here, but there are even more that can be implemented. There are also a variety of Jetpack Compose tutorials online that will help you get started in case you want to start your own app!
+
 # See Also
 
 Here is some great [Jetpack Compose Documentation](https://developer.android.com/develop/ui/compose)
