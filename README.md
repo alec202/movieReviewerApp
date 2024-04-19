@@ -23,6 +23,10 @@ Additionally, some of these dependencies are for things that we won't go over wi
 
 # Coding Section
 
+## Login UI
+
+## Movie Selection UI
+
 # Further Notices
 
 # See Also
