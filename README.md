@@ -106,17 +106,85 @@ By remember is a helpful way to ensure that the variable stays in your compositi
 **Step 4: Begin composable structure with a column**
 
 ```kotlin
+
 Column(
     // makes it so that elements take up entire width, elements are centered horizontally
     modifier = Modifier.fillMaxSize(),
     horizontalAlignment = Alignment.CenterHorizontally
 ){
 }
+
 ```
 
 This column structure helps organize all of our UI elements. Before the actual function arguments, in the parentheses we can add certain modifiers.
 
 Here, we ensure that the elements are centered horizontally and are also taking up the entire width of the viewport. All of our elements will go in this function.
+
+**Step 5: Add whitespace to top, logo**
+
+```kotlin
+
+// Blankspace
+Spacer(modifier = Modifier.height(90.dp))
+
+// Our logo. Totally not from a random internet source
+Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo")
+
+```
+
+To explain this, the spacer is just some custom whitespace we can add. The height is in dp (display pixels). For our logo, we pull an image from the R/drawable directory, using its id to find it and add it to the top of the page.
+
+**Step 6: Add two editable text fields for email and password**
+
+```kotlin
+
+// This is the email text field. Updates userEmail var and viewModel var.
+OutlinedTextField(value = userEmail, onValueChange = {
+    userEmail = it
+    vm.noEmail.value = it
+
+//  Hint text
+},  label = {
+     Text(text = "Valid Email Address")
+})
+
+// More whitespace
+Spacer(modifier = Modifier.height(20.dp))
+
+// This is the password text field. Updates userPass var and viewModel var.
+OutlinedTextField(value = userPass, onValueChange = {
+    userPass = it
+    vm.noPass.value = it
+
+// Hint text
+}, label = {
+    Text(text = "Password - 6+ chars")
+}, visualTransformation = if (showPass) {
+    VisualTransformation.None
+} else {
+    PasswordVisualTransformation()
+},
+    trailingIcon = { //Here is where I add the icon that allows you to show the password
+        if (showPass) {
+            IconButton(onClick = { showPass = false }) {
+                Icon(
+                    imageVector = Icons.Filled.Visibility,
+                    contentDescription = "hide_password"
+                    )
+            }
+        } else {
+            IconButton(
+                onClick = { showPass = true }) {
+                Icon(
+                    imageVector = Icons.Filled.VisibilityOff,
+                    contentDescription = "hide_password"
+                    )
+                }
+        }
+    })
+
+```
+
 
 ## Movie Selection UI
 
