@@ -77,6 +77,7 @@ class MainActivity : ComponentActivity() {
                             if (it.resultCode == RESULT_OK){
                                 it.data?.let {
                                     val movieToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
+                                    if (movieToAdd.mediaType == "")
                                     val test = it.getStringExtra("movieInMovieInfoInstanceString")
                                     Log.d("movieInMovieInfoInstance", "$movieToAdd")
                                     if (test != null) {
