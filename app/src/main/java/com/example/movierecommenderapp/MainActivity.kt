@@ -52,12 +52,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //val watchedMovie: ArrayList<movieInfo> = intent.getParcelableExtra("Watched Movie")
             val username = intent?.getStringExtra("username")
             val uid = intent?.getStringExtra("uid")
-            val watchedMovies = intent?.getParcelableArrayListExtra("watchedMovies", movieInfo::class.java)
-            val favMovies = intent?.getParcelableArrayListExtra("favoriteMovies", movieInfo::class.java)
-            val favTV = intent?.getParcelableArrayListExtra("favoriteTV", movieInfo::class.java)
+            val watchedMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
+            val favMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
+            val favTVState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             MovieRecommenderAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -71,20 +70,28 @@ class MainActivity : ComponentActivity() {
                         // center everything horizontally
                         , horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+
                         val destLauncher = rememberLauncherForActivityResult(
                             ActivityResultContracts.StartActivityForResult()){
                             Log.d("movieInMovieInfoInstance", "Inside main after finishing activity")
                             if (it.resultCode == RESULT_OK){
                                 it.data?.let {
                                     val movieToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
-                                    if (movieToAdd.mediaType == "")
-                                    val test = it.getStringExtra("movieInMovieInfoInstanceString")
-                                    Log.d("movieInMovieInfoInstance", "$movieToAdd")
-                                    if (test != null) {
-                                        Log.d("movieInMovieInfoInstanceString", test)
-                                    } else{
-                                        Log.d("movieInMovieInfoInstanceString", "Test is null")
+                                    if (movieToAdd != null) {
+//                                    if (movieToAdd?.mediaType == "movie"){
+                                        val updatedList = watchedMoviesState.value.toMutableList()
+                                        updatedList.add(movieToAdd)
+                                        watchedMoviesState.value = updatedList
+                                        Log.d(
+                                            "movieInMovieInfoInstance",
+                                            "${watchedMoviesState.value}"
+                                        )
+//                                    }
                                     }
+                                }
+                            } else{
+                                it.data?.let{
+                                    val thingToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
                                 }
                             }
                         }
@@ -98,17 +105,11 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.size(15.dp))
                         SearchBar(destLauncher, thisActivity, thisContext)
                         Spacer(modifier = Modifier.size(25.dp))
-                        if (watchedMovies != null) {
-                            displayWatchedMovies(watchedMovies, "Watched Movies")
-                        }
+                        displayWatchedMovies(watchedMoviesState, "Watched Movies")
                         Spacer(modifier = Modifier.size(25.dp))
-                        if (favMovies != null) {
-                            displayWatchedMovies(favMovies, "Favorite Movies")
-                        }
+                            displayWatchedMovies(favMoviesState, "Favorite Movies")
                         Spacer(modifier = Modifier.size(25.dp))
-                        if (favTV != null) {
-                            displayWatchedMovies(favTV, "Favorite TV")
-                        }
+                            displayWatchedMovies(favTVState, "Favorite TV")
                         Spacer(modifier = Modifier.size(25.dp))
                         //buttonToLaunchUserMovieScreen()
                         buttonToLogout()
@@ -128,7 +129,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun displayWatchedMovies(movieList: ArrayList<movieInfo>, title: String) {
+    fun displayWatchedMovies(movieList: MutableState<List<movieInfo>>, title: String) {
         Column {
             Text(
                 text = title,
@@ -141,9 +142,9 @@ class MainActivity : ComponentActivity() {
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
-                items(movieList.size) {
+                items(movieList.value.size) {
                     Text(
-                        text = movieList[it].name,
+                        text = movieList.value[it].name,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -256,11 +257,11 @@ class MainActivity : ComponentActivity() {
                 Spacer(modifier = Modifier.size(15.dp))
 //                SearchBar(destLauncher)
                 Spacer(modifier = Modifier.size(25.dp))
-                displayWatchedMovies(testArray, "Watched Movies")
+//                displayWatchedMovies(testArray, "Watched Movies")
                 Spacer(modifier = Modifier.size(25.dp))
-                displayWatchedMovies(array2, "Favorite Movies")
+//                displayWatchedMovies(array2, "Favorite Movies")
                 Spacer(modifier = Modifier.size(25.dp))
-                displayWatchedMovies(testArray3, "Favorite TV")
+//                displayWatchedMovies(testArray3, "Favorite TV")
                 Spacer(modifier = Modifier.size(25.dp))
                 //buttonToLaunchUserMovieScreen()
                 buttonToLogout()

@@ -129,17 +129,17 @@ class reviewedMoviesActivity : ComponentActivity() {
     fun packIntoIntentAndFinish(
         moviePicked: movieInfo,
         thisContext: Context,
-        thisActivity: Activity?
+        thisActivity: Activity?,
+        // Increment result_ok based off of this value
+        addToFavoritesList: Int
     ){
         val movieSelectedData = Intent()
         movieSelectedData.putExtra("movieInMovieInfoInstance", moviePicked)
         movieSelectedData.putExtra("movieInMovieInfoInstanceString", moviePicked.name)
         Log.d("movieInMovieInfoInstance", "before finishing activity")
         Log.d("movieInMovieInfoInstance", "$moviePicked")
-        thisActivity?.setResult(RESULT_OK, movieSelectedData)
+        thisActivity?.setResult(RESULT_OK + addToFavoritesList, movieSelectedData)
         thisActivity?.finish()
-
-
 
     }
     @Composable
@@ -154,13 +154,13 @@ class reviewedMoviesActivity : ComponentActivity() {
                 Button(onClick = {
 
                     var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
-                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
+                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity, 0)
                 }) {
                     Text("Already Watched List")
                 }
                 Button(onClick = {
                     var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
-                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
+                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity, 1)
                 }) {
 
                     Text("Favorites List")
