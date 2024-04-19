@@ -181,9 +181,29 @@ OutlinedTextField(value = userPass, onValueChange = {
                     )
                 }
         }
-    })
+})
 
 ```
+
+This section will take a little explanation.  We first start with the text field. To be able to add text to it, we tie it to the variable we created earlier. We also make it so that these two variables change whenever the entered text changes.
+The label is the hint text, where we let the user know they must enter a valid email address.
+
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/4213f373-708f-418d-a0cf-080099469e91)
+
+Next, we create the password text field, which uses a very similar layout, but also has visibility functionality. As you can see, we set it so that if the boolean is true, we show the password.
+If the boolean is false, we hide the password. We use visual transformation to use the built-in password censor for Jetpack Compose, creating asterisks. We also use an icon in the Compose Icon library to toggle this visibility.
+This icon is the usual eyeball, with a line through it when the password shouldn't be visible. Clicking it changes the visibility, and here is the field, with password visibility on:
+
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/ab6095d0-59a8-430d-994d-f300093cf1ed)
+
+With it off:
+
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/874c061c-a9c6-4999-a645-3283993bb2c5)
+
+**Step 7:**
+
+
+
 
 
 ## Movie Selection UI
