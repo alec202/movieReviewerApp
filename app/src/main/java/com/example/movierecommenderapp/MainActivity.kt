@@ -1,11 +1,17 @@
 package com.example.movierecommenderapp
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
@@ -65,12 +71,31 @@ class MainActivity : ComponentActivity() {
                         // center everything horizontally
                         , horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        val destLauncher = rememberLauncherForActivityResult(
+                            ActivityResultContracts.StartActivityForResult()){
+                            Log.d("movieInMovieInfoInstance", "Inside main after finishing activity")
+                            if (it.resultCode == RESULT_OK){
+                                it.data?.let {
+                                    val movieToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
+                                    val test = it.getStringExtra("movieInMovieInfoInstanceString")
+                                    Log.d("movieInMovieInfoInstance", "$movieToAdd")
+                                    if (test != null) {
+                                        Log.d("movieInMovieInfoInstanceString", test)
+                                    } else{
+                                        Log.d("movieInMovieInfoInstanceString", "Test is null")
+                                    }
+                                }
+                            }
+                        }
+                        val thisContext = LocalContext.current
+                        val thisActivity = thisContext as? Activity
+
                         Spacer(modifier = Modifier.size(15.dp))
                         if (username != null) {
                             Greeting(name = username)
                         }
                         Spacer(modifier = Modifier.size(15.dp))
-                        SearchBar()
+                        SearchBar(destLauncher, thisActivity, thisContext)
                         Spacer(modifier = Modifier.size(25.dp))
                         if (watchedMovies != null) {
                             displayWatchedMovies(watchedMovies, "Watched Movies")
@@ -143,10 +168,13 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun SearchBar(){
+    fun SearchBar(
+        destLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+        thisActivity: Activity?,
+        thisContext: Context
+    ) {
         var text by remember { mutableStateOf("") }
-        val thisContext = LocalContext.current
-        val thisActivity = thisContext as? Activity
+
         Row {
             Spacer(modifier = Modifier.size(15.dp))
             TextField(
@@ -161,7 +189,7 @@ class MainActivity : ComponentActivity() {
                 onClick = {
                     val toSearch = Intent(thisContext, reviewedMoviesActivity::class.java)
                     toSearch.putExtra("title", text)
-                    thisActivity?.startActivity(toSearch)
+                    destLauncher.launch(toSearch)
                 }
             ) {
                 Text("Search")
@@ -203,14 +231,14 @@ class MainActivity : ComponentActivity() {
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
-        val movie1 = movieInfo("Casino Royale", 9.0, "empty")
-        val movie2 = movieInfo("Quantum of Solace", 6.5, "empty")
-        val movie3 = movieInfo("Skyfall", 7.8, "10.0")
-        val movie4 = movieInfo("Diamonds are Forever", 5.5, "7.8")
-        val movie5 = movieInfo("No Time To Die", 8.8, "7.5")
-        val tv1 = movieInfo("Psych", 8.0, "9.5")
-        val tv2 = movieInfo("House MD", 9.0, "8.6")
-        val tv3 = movieInfo("Leverage",9.6, "10.0")
+        val movie1 = movieInfo("Casino Royale", 9.0, "empty", "Tv")
+        val movie2 = movieInfo("Quantum of Solace", 6.5, "empty", "tv")
+        val movie3 = movieInfo("Skyfall", 7.8, "10.0", "tv")
+        val movie4 = movieInfo("Diamonds are Forever", 5.5, "7.8", "tv")
+        val movie5 = movieInfo("No Time To Die", 8.8, "7.5", "tv")
+        val tv1 = movieInfo("Psych", 8.0, "9.5", "tv")
+        val tv2 = movieInfo("House MD", 9.0, "8.6", "tv")
+        val tv3 = movieInfo("Leverage",9.6, "10.0", "tv")
         val testArray = arrayListOf(movie1, movie2, movie3,movie4, movie5)
         val array2 = arrayListOf(movie1, movie3)
         val testArray3 = arrayListOf(tv1,tv2,tv3)
@@ -225,7 +253,7 @@ class MainActivity : ComponentActivity() {
                 Spacer(modifier = Modifier.size(15.dp))
                 Greeting(name = "Cathy")
                 Spacer(modifier = Modifier.size(15.dp))
-                SearchBar()
+//                SearchBar(destLauncher)
                 Spacer(modifier = Modifier.size(25.dp))
                 displayWatchedMovies(testArray, "Watched Movies")
                 Spacer(modifier = Modifier.size(25.dp))

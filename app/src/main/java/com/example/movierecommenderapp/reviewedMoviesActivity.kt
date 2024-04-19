@@ -1,6 +1,8 @@
 package com.example.movierecommenderapp
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -21,7 +23,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -77,11 +78,7 @@ class reviewedMoviesActivity : ComponentActivity() {
                         // Display the recyclerView with top 3 options
                         displayTop3Results(apiFetchResult = apiFetchSuccess)
                         Spacer(modifier = Modifier.size(30.dp))
-                        askForRating()
-                        Spacer(modifier = Modifier.size(30.dp))
-                        askWhichListToAddMovieTo()
-                        Spacer(modifier = Modifier.size(30.dp))
-                        displayButtons(apiFetchSuccess)
+                        askForRatingandShowButtons(apiFetchSuccess)
                     }
                 }
             }
@@ -91,17 +88,15 @@ class reviewedMoviesActivity : ComponentActivity() {
 
     @Composable
     fun askWhichListToAddMovieTo(){
-        Text(text = "Pick the button for the list you want to add this movie to!",
+        Text(text = "Pick the list you want to add this movie to!",
             fontSize = 25.sp,
             modifier = Modifier.fillMaxWidth(1f))
     }
 
     @Composable
-    fun askForRating() {
+    fun askForRatingandShowButtons(apiFetchSuccess: Boolean) {
         var text by remember { mutableStateOf("") }
-        val thisContext = LocalContext.current
-        val thisActivity = thisContext as? Activity
-        Text(text = "Enter a rating:", modifier = Modifier.fillMaxWidth(1f))
+        Text(text = "Enter a rating out of 10:", modifier = Modifier.fillMaxWidth(1f))
         TextField(
             value = text,
             onValueChange = { text = it },
@@ -109,41 +104,65 @@ class reviewedMoviesActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxWidth(1f)
         )
+        Spacer(modifier = Modifier.size(30.dp))
+        askWhichListToAddMovieTo()
+        Spacer(modifier = Modifier.size(30.dp))
+        displayButtons(apiFetchSuccess, text)
+
     }
 
 
-    fun bundleUpForIntentPassing(moviePicked: Result): movieInfo{
+    fun bundleUpForIntentPassing(moviePicked: Result, userRating: Double): movieInfo{
         var movieName = ""
+        var movieDescription = moviePicked.overview
+        val mediaType = moviePicked.media_type
+        // title is located in 2 different spots, assign the variable based on the correct spot.
         if (moviePicked.title != null){
-            return movieInfo("", 3.3, "")
+            movieName = moviePicked.title
         } else {
-            return movieInfo("", 3.3, "")
-
+            movieName = moviePicked.original_name!!
         }
-
+        // return the movieInfo instance
+        return movieInfo(movieName, userRating, movieDescription, mediaType)
     }
-    fun packIntoIntentAndFinish(moviePicked: movieInfo){
+
+    fun packIntoIntentAndFinish(
+        moviePicked: movieInfo,
+        thisContext: Context,
+        thisActivity: Activity?
+    ){
+        val movieSelectedData = Intent()
+        movieSelectedData.putExtra("movieInMovieInfoInstance", moviePicked)
+        movieSelectedData.putExtra("movieInMovieInfoInstanceString", moviePicked.name)
+        Log.d("movieInMovieInfoInstance", "before finishing activity")
+        Log.d("movieInMovieInfoInstance", "$moviePicked")
+        thisActivity?.setResult(RESULT_OK, movieSelectedData)
+        thisActivity?.finish()
+
+
 
     }
     @Composable
-    fun displayButtons(apiFetchResult: Boolean){
+    fun displayButtons(apiFetchResult: Boolean, userRating: String){
         // If that movie generated no results, then we shouldn't allow them to add it to favorites
+        val thisContext = LocalContext.current
+        val thisActivity = thisContext as? Activity
         if (apiFetchResult){
             Row(horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth(1f)
             ) {
                 Button(onClick = {
-                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked])
-                    packIntoIntentAndFinish(movieInMovieInfoFormat)
+
+                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
+                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
                 }) {
                     Text("Already Watched List")
                 }
                 Button(onClick = {
-                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked])
-                    packIntoIntentAndFinish(movieInMovieInfoFormat)
+                    var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
+                    packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
                 }) {
-                    // I'll have to unpack and determine the media type and
-                    // send to the correct array.
+
                     Text("Favorites List")
                 }
 
