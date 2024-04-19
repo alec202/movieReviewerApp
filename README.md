@@ -37,8 +37,6 @@ As you can see, the UI consists of a logo, two text fields, and two buttons. Her
 
 In the beginning of the app, you need to import the following libraries to create the Jetpack Compose UI:
 
-![image](https://github.com/alec202/movieReviewerApp/assets/117123349/ad027288-442b-4e49-94a2-519e9ac9af50)
-
 ```
 
 import androidx.compose.foundation.Image
