@@ -68,6 +68,15 @@ import androidx.compose.ui.unit.dp
 
 ```
 
+**Step 2: Inside of class, create @Composable function Login**
+
+```kotlin
+@Composable
+fun Login() {
+
+}
+```
+
 
 
 ## Movie Selection UI
