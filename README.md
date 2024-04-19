@@ -260,3 +260,7 @@ And with this we are completely finished with our login. See the "Conclusion" se
 # Conclusion
 
 # See Also
+
+Here is some great [Jetpack Compose Documentation](https://developer.android.com/develop/ui/compose)
+
+Medium also has some great tutorials, [such as this one](https://medium.com/@WhiteBatCodes/simple-login-page-in-jetpack-compose-9c92af690234)
