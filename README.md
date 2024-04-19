@@ -238,7 +238,18 @@ First, we start off with the usual white space. Then, we create this row format,
 buttons arranged in the center of the screen horizontally.
 
 After this, we make the two buttons. We add padding to both of them, giving them space, and we use custom heights and widths of the buttons with the size modifier. We add our functions for logging on and creating a new account
-through firebase, and with this, we are done with the login screen! Users can enter their email and password and either login directly, or create an account with the entered credentials!
+through firebase, and with this, we are done with the login screen! The final step is to actually set the content as this giant login function we created. We do this in the onCreate function in the beginning of our activity, with a simple statement:
+
+```kotlin
+
+// Sets the content of the page as the login composable
+setContent {
+    Login()
+}
+
+```
+
+And with this we are completely finished with our login. See the "Conclusion" section to see our repo, with all of the code, including firebase and viewModels, to see all of the workings of the login page!
 
 
 
@@ -246,6 +257,6 @@ through firebase, and with this, we are done with the login screen! Users can en
 
 ## Movie Selection UI
 
-# Further Notices
+# Conclusion
 
 # See Also
