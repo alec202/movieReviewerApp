@@ -200,7 +200,39 @@ With it off:
 
 ![image](https://github.com/alec202/movieReviewerApp/assets/117123349/874c061c-a9c6-4999-a645-3283993bb2c5)
 
-**Step 7:**
+Another interesting thing to note is that the hint text embeds itself into the border of the text field while entering text, allowing you to continue to see it even after entering text. Pretty Neat!
+
+**Step 7: Add row of buttons to bottom of screen**
+
+```kotlin
+
+// More blankspace
+Spacer(modifier = Modifier.height(60.dp))
+
+// Row at bottom that allows you to choose whether you want to log into an existing account or make a new one.
+Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.Center
+) {
+    Button(
+        onClick = { loginNow() },
+            modifier = Modifier
+                .padding(horizontal = 15.dp)
+                .size(width = 135.dp, height = 50.dp)
+    ) {
+        Text(text = "Log In")
+    }
+    Button(
+        onClick = { createAccount() },
+            modifier = Modifier
+                .padding(horizontal = 15.dp)
+                .size(width = 135.dp, height = 50.dp)
+    ) {
+        Text(text = "New Account")
+    }
+}
+
+```
 
 
 
