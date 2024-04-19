@@ -71,12 +71,33 @@ import androidx.compose.ui.unit.dp
 **Step 2: Inside of class, create @Composable function Login**
 
 ```kotlin
+
 @Composable
 fun Login() {
 
 }
+
 ```
 @Composable helps indicate that the function is meant for Jetpack Compose, used to create the UI of the app. After this, we will fill this function with the page contents.
+
+**Step 3: Add variables we need to keep user email, password, and password visibility boolean**
+
+```kotlin
+
+// username variable. Uses by remember so Jetpack Compose can keep the variables.
+var userEmail by remember {
+    mutableStateOf("")
+}
+// password variable. Uses by remember so Jetpack Compose can keep the variables.
+var userPass by remember {
+    mutableStateOf("")
+}
+
+// variable for showing/hiding user password, usual function
+var showPass by remember { mutableStateOf(value = false) }
+
+```
+
 
 
 
