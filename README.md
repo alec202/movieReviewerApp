@@ -14,6 +14,7 @@ For this project, we are implementing our Movie Recommender App using Android St
 API things we do. We won't go over any API stuff in this demo, rather focusing on the Jetpack Compose things we created.**
 
 **Dependencies:**
+
 ![image](https://github.com/alec202/movieReviewerApp/assets/117123349/3d915105-11f8-406f-979d-2d57d4f7a6b1)
 
 
