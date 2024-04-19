@@ -234,6 +234,12 @@ Row(
 
 ```
 
+First, we start off with the usual white space. Then, we create this row format, allowing us to put these two buttons in the same vertical height. We again add modifiers to take up the entire width, and also make the
+buttons arranged in the center of the screen horizontally.
+
+After this, we make the two buttons. We add padding to both of them, giving them space, and we use custom heights and widths of the buttons with the size modifier. We add our functions for logging on and creating a new account
+through firebase, and with this, we are done with the login screen! Users can enter their email and password and either login directly, or create an account with the entered credentials!
+
 
 
 
