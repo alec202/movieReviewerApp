@@ -55,6 +55,7 @@ class MainActivity : ComponentActivity() {
             val username = intent?.getStringExtra("username")
             val uid = intent?.getStringExtra("uid")
             val watchedMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
+            val watchedTVState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             val favMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             val favTVState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             MovieRecommenderAppTheme {
@@ -74,11 +75,13 @@ class MainActivity : ComponentActivity() {
                         val destLauncher = rememberLauncherForActivityResult(
                             ActivityResultContracts.StartActivityForResult()){
                             Log.d("movieInMovieInfoInstance", "Inside main after finishing activity")
+                            // If the result code is RESULT_OK then we are adding to the watched alreadly list
                             if (it.resultCode == RESULT_OK){
                                 it.data?.let {
                                     val movieToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
                                     if (movieToAdd != null) {
-//                                    if (movieToAdd?.mediaType == "movie"){
+                                        // If the media type is movie we add to the watched Movies list
+                                    if (movieToAdd.mediaType == "movie"){
                                         val updatedList = watchedMoviesState.value.toMutableList()
                                         updatedList.add(movieToAdd)
                                         watchedMoviesState.value = updatedList
@@ -86,9 +89,15 @@ class MainActivity : ComponentActivity() {
                                             "movieInMovieInfoInstance",
                                             "${watchedMoviesState.value}"
                                         )
-//                                    }
+                                    // Media Type is TV so we should add to the watched TV list
+                                    } else {
+                                        val updatedList = watchedTVState.value.toMutableList()
+                                        updatedList.add(movieToAdd)
+                                        watchedTVState.value = updatedList
+                                    }
                                     }
                                 }
+                                // If the code isn't RESULT_OK then we aren't adding to the Favorites lazy rows
                             } else{
                                 it.data?.let{
                                     val thingToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
@@ -107,7 +116,9 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.size(25.dp))
                         displayWatchedMovies(watchedMoviesState, "Watched Movies")
                         Spacer(modifier = Modifier.size(25.dp))
-                            displayWatchedMovies(favMoviesState, "Favorite Movies")
+                        displayWatchedMovies(movieList = watchedTVState, title = "Watched TV")
+                        Spacer(modifier = Modifier.size(25.dp))
+                        displayWatchedMovies(favMoviesState, "Favorite Movies")
                         Spacer(modifier = Modifier.size(25.dp))
                             displayWatchedMovies(favTVState, "Favorite TV")
                         Spacer(modifier = Modifier.size(25.dp))
