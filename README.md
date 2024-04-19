@@ -1,9 +1,10 @@
 # Movie Recommender App
-Group project to create movie recommender app for Android devices. It will be implemented using Jetpack Compose and the TMDB API (and our code of course).
-This app was created by Jacob, Alec, and Catherine.
+Group project to create movie recommender app for Android devices. It will be implemented using Jetpack Compose, Firebase, and the TMDB API (and our code of course).
+This app was created by Jacob, Alec, and Catherine. Development ended on April 19, 2024.
 
 # Overview
-This is the overview of the project. Here, I will put the overview
+For this project, our focus area is Jetpack Compose. Jetpack compose is the recommended modern toolkit for UI building with Android Studio. In fact, these days, when you go
+and try to look
 
 # Getting started
 
