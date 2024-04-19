@@ -39,7 +39,7 @@ In the beginning of the app, you need to import the following libraries to creat
 
 ![image](https://github.com/alec202/movieReviewerApp/assets/117123349/ad027288-442b-4e49-94a2-519e9ac9af50)
 
-'''
+```
 
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
@@ -68,7 +68,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
-'''
+```
 
 
 
