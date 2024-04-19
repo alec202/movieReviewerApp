@@ -31,6 +31,8 @@ Here is the finished UI:
 
 ![image](https://github.com/alec202/movieReviewerApp/assets/117123349/ff3aaec2-ab60-462f-a190-5ce771236760)
 
+As you can see, the UI consists of a logo, two text fields, and two buttons. Here, I will show you how to code this with Jetpack Compose.
+
 
 
 ## Movie Selection UI
