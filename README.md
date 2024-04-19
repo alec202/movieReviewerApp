@@ -25,6 +25,13 @@ Additionally, some of these dependencies are for things that we won't go over wi
 
 ## Login UI
 
+In the login section, the user can login through Firebase Authentication, either using an existing login or creating a new account.
+
+Here is the finished UI:
+
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/8016fb09-c343-49e4-8ef3-3a9f1099d6f1)
+
+
 ## Movie Selection UI
 
 # Further Notices
