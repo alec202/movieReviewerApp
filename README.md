@@ -76,6 +76,7 @@ fun Login() {
 
 }
 ```
+@Composable helps indicate that the function is meant for Jetpack Compose, used to create the UI of the app. After this, we will fill this function with the page contents.
 
 
 
