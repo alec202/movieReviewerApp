@@ -407,6 +407,8 @@ fun displayNoResultsButton(){
 ```
 
 The function I just mentioned here is implemented, and as we said, it's really simple. It just displays that "Back To Main Screen" button, since there aren't any results from the API
+<br>
+**Step 6: Composable function for displaying the top 3 results from the API**
 
 
 # Conclusion
