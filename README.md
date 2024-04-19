@@ -266,6 +266,149 @@ add it to your lists, and you can even enter a user rating. Of course, we will f
 
 Here is the screen layout. Now, I will go over the steps.
 
+**Step 1: imports**
+```kotlin
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
+import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.material.Surface
+import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+```
+
+**Step 2: Composable function for choosing which list the user wants to add to**
+
+```kotlin
+
+@Composable
+fun askWhichListToAddMovieTo(){
+    Text(text = "Pick the list you want to add this movie to!",
+        fontSize = 25.sp,
+        modifier = Modifier.fillMaxWidth(1f))
+}
+
+```
+
+Here, we create the nice text label. We make the font large so the user can notice it.
+
+**Step 3: Composable function for ratings, list selection, and buttons**
+
+```kotlin
+
+@Composable
+fun askForRatingandShowButtons(apiFetchSuccess: Boolean) {
+    var text by remember { mutableStateOf("") }
+    Text(text = "Enter a rating out of 10:", modifier = Modifier.fillMaxWidth(1f))
+    TextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text("User Rating") },
+        modifier = Modifier
+            .fillMaxWidth(1f)
+    )
+    Spacer(modifier = Modifier.size(30.dp))
+    askWhichListToAddMovieTo()
+    Spacer(modifier = Modifier.size(30.dp))
+    displayButtons(apiFetchSuccess, text)
+
+}
+
+```
+
+Here, we use the typical by remember variable to save what rating the user enters in case we recompose. We add the text label again, asking for the user to enter a rating. We give the user a text field to enter this rating, and add some modifiers
+to make it look clean. We also implement our function from step 2 here, as well as the displayButton function, which I will show next. 
+
+This brings up an interesting point that we don't have to contain everything in a singular function like the login screen. We can also implement one thing at a time and combine them together like this.
+
+**Step 4: Composable function for buttons**
+
+```kotlin
+
+@Composable
+fun displayButtons(apiFetchResult: Boolean, userRating: String){
+    // If that movie generated no results, then we shouldn't allow them to add it to favorites
+    val thisContext = LocalContext.current
+    val thisActivity = thisContext as? Activity
+    if (apiFetchResult){
+        Row(horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth(1f)
+        ) {
+            Button(onClick = {
+
+                var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
+                packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
+            }) {
+                Text("Already Watched List")
+            }
+            Button(onClick = {
+                var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
+                packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity)
+            }) {
+
+                Text("Favorites List")
+            }
+
+
+        }
+
+    } else{
+        displayNoResultsButton()
+    }
+}
+
+```
+
+This is a long function, but it's pretty simple. We implement logic so that we cannot add anything to the lists if there aren't any results from the API. Focusing on the UI elements, we create these two buttons in a row, declare the text for the buttons,
+implementing them perfectly. Also, if there aren't any API results, we display a new button, which is another function that we will go over in this part.
+
+As an FYI, this is what the screen looks like with no API results:
+
+![2](https://github.com/alec202/movieReviewerApp/assets/117123349/2edf5d6f-5f3d-4ea7-ac45-503546bf605a)
+
+As you can see, we just have that singular button.
+
+**Step 5: Composable function for no API Results**
+
+```kotlin
+
+@Composable
+fun displayNoResultsButton(){
+    Button(onClick = {finish()}) {
+        Text(text = "Back To Main Screen")
+    }
+}
+
+```
+
+The function I just mentioned here is implemented, and as we said, it's really simple. It just displays that "Back To Main Screen" button, since there aren't any results from the API
+
+
 # Conclusion
 
 This concludes our tutorial to create our movie selection app! Users can log in or create a new account, browse movies with the TMDB API, as well as add movies to their watch list, favorite movies list, and favorite tv shows list.
