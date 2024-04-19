@@ -101,6 +101,20 @@ class MainActivity : ComponentActivity() {
                             } else{
                                 it.data?.let{
                                     val thingToAdd = it.getParcelableExtra<movieInfo>("movieInMovieInfoInstance")
+                                    if (thingToAdd != null) {
+                                        // If the media type is movie we add to the favorites Movies list
+                                        if (thingToAdd.mediaType == "movie"){
+                                            val updatedList = favMoviesState.value.toMutableList()
+                                            updatedList.add(thingToAdd)
+                                            favMoviesState.value = updatedList
+                                            // Media Type is TV so we should add to the favorites TV list
+                                        } else {
+                                            val updatedList = favTVState.value.toMutableList()
+                                            updatedList.add(thingToAdd)
+                                            favTVState.value = updatedList
+                                        }
+                                    }
+
                                 }
                             }
                         }

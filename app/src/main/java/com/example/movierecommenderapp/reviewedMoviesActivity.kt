@@ -130,7 +130,8 @@ class reviewedMoviesActivity : ComponentActivity() {
         moviePicked: movieInfo,
         thisContext: Context,
         thisActivity: Activity?,
-        // Increment result_ok based off of this value
+        // Increment result_ok based off of this value. Treat it like C boolean 0 if false,
+        // 1 if true. 0 if not adding to favorites list, 1 if yes adding to favorites list.
         addToFavoritesList: Int
     ){
         val movieSelectedData = Intent()
@@ -152,7 +153,6 @@ class reviewedMoviesActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(1f)
             ) {
                 Button(onClick = {
-
                     var movieInMovieInfoFormat = bundleUpForIntentPassing(vm.top3Results[vm.indexPicked], userRating.toDouble())
                     packIntoIntentAndFinish(movieInMovieInfoFormat, thisContext, thisActivity, 0)
                 }) {
