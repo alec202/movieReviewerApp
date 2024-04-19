@@ -98,7 +98,18 @@ var showPass by remember { mutableStateOf(value = false) }
 
 ```
 
+By remember is a helpful way to ensure that the variable stays in your composition, even if it's restructured or breaks. The boolean for showPass will help toggle password visibility.
 
+**Step 4: Begin composable structure with a column**
+
+```kotlin
+Column(
+    // makes it so that elements take up entire width, elements are centered horizontally
+    modifier = Modifier.fillMaxSize(),
+    horizontalAlignment = Alignment.CenterHorizontally
+){
+}
+```
 
 
 ## Movie Selection UI
