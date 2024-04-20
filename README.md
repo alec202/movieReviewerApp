@@ -270,6 +270,209 @@ And with this we are completely finished with our login. See the "Conclusion" se
 
 ## Main Screen
 
+Next, here is our main screen, featuring the sections where you can save your films, as well as a search bar. The user is directed here right after login. You can scroll through these favorited movies and tv shows, and it's a very nice display
+so you know what movies you have already seen or favorited. Here is the UI:
+
+![image](https://github.com/alec202/movieReviewerApp/assets/117123349/2dc6860f-9a69-4b53-b010-5e1fc8bca969)
+
+Now, we will go over the steps for this screen.
+
+**Step 1: imports**
+```kotlin
+
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
+
+```
+
+**Step 2: Composable for displaying watched movies**
+
+```kotlin
+
+@Composable
+fun displayWatchedMovies(movieList: MutableState<List<movieInfo>>, title: String) {
+    Column {
+    Text(
+        text = title,
+        color = Color.Red,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
+    )
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
+        items(movieList.value.size) {
+            Text(
+                text = movieList.value[it].name,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .width(90.dp)
+                    .height(90.dp)
+                    .background(Color.White)
+                    .border(BorderStroke(2.dp, SolidColor(Color.Black)))
+            )
+        }
+    }
+    }
+}
+
+```
+
+Here, we create a column for the watched movies. This also displays the red text for the watched movies section. We also modify a lot of the colors in this, as well as format the movies when they're actually saved for the user, which
+I will end up showing later.
+
+**Step 3: Composable for greeting**
+
+```kotlin
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+    text = "Hello ${vm.username.value}!",
+    textAlign = TextAlign.Center,
+    fontWeight = FontWeight.Bold,
+    modifier = modifier
+    )
+}
+
+```
+
+Here, we create the greeting at the beginning of the page. It gets the users username and simply creates a hello message. Very simple, and uses things we've already gone over, such as text alignment and bolding the font.
+
+**Step 4: Composable for Search Bar**
+
+```kotlin
+
+@Composable
+fun SearchBar(
+    destLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+    thisActivity: Activity?,
+    thisContext: Context
+) {
+    var text by remember { mutableStateOf("") }
+
+    Row {
+        Spacer(modifier = Modifier.size(15.dp))
+        TextField(
+            value = text ,
+            onValueChange = {text = it},
+            label = { Text("Search") },
+            modifier = Modifier
+                .width(250.dp)
+        )
+        Spacer(modifier = Modifier.size(15.dp))
+        Button(
+            onClick = {
+                val toSearch = Intent(thisContext, reviewedMoviesActivity::class.java)
+                toSearch.putExtra("title", text)
+                destLauncher.launch(toSearch)
+            }
+        ) {
+            Text("Search")
+
+        }
+    }
+}
+
+```
+
+Here, we create a nice row for the search bar. Extremely simple. Just creates essentially a text field. The app takes what the user types in and uses the API to come up with results.
+
+**Step 5: Composable for logout button**
+
+```kotlin
+
+@Composable
+fun buttonToLogout() {
+    Button(
+        onClick = {
+            vm.logout()
+            val toLogin = Intent(this, LoginActivity::class.java)
+            startActivity(toLogin)
+            finish()
+
+        }, content = {
+            Text("Log Out")
+        }
+    )
+}
+
+```
+
+As you can see yet again, this is extremely simple. It simply creates a logout button that goes back to the login page.
+
+**Step 6: Composable to format all content**
+
+Unlike the login page, we show a different way of creating composables here. Almost like lego bricks, we put everything together in *another* composable, formatting everything in here. You will see familiar functions.
+
+```kotlin
+
+@Composable
+fun GreetingPreview() {
+    MovieRecommenderAppTheme {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.LightGray)
+            // center everything horizontally
+            , horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.size(15.dp))
+            Greeting(name = "Cathy")
+            Spacer(modifier = Modifier.size(15.dp))
+//               SearchBar(destLauncher)
+            Spacer(modifier = Modifier.size(25.dp))
+//               displayWatchedMovies(testArray, "Watched Movies")
+            Spacer(modifier = Modifier.size(25.dp))
+//               displayWatchedMovies(array2, "Favorite Movies")
+            Spacer(modifier = Modifier.size(25.dp))
+//               displayWatchedMovies(testArray3, "Favorite TV")
+            Spacer(modifier = Modifier.size(25.dp))
+            //buttonToLaunchUserMovieScreen()
+            buttonToLogout()
+        }
+    }
+}
+
+```
+
+Here we use the MovieRecommenderAppTheme, which I will touch on soon. Also, we then set the entire content of the page! We have spacers, then the greeting, then the watched movies, then the favorite movies, then the
+favorite tv, and then the logout button. As you can see, composable makes reusing code extremely simple! We even use the displayedWatchedMovies function for more than just watched movies, as you can see.
+
+
 ## Movie/Show Information Screen
 
 Lastly, there is our movie & show info screen. After searching, the user is directed here. You can scroll through the results, which includes a title and description of each listing. After clicking on a specific listing, you can 
