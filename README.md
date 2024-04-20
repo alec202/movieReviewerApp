@@ -16,6 +16,8 @@ with a search bar directly in our app. The user can then scroll through results 
 favorite movies, or favorite shows. Users will have their data saved to firebase as well, keeping results even after logging out!
 
 Here is a video demo of our app!
+[![Alt Text](https://www.youtube.com/watch?v=dOa_4jPpA48)](https://www.youtube.com/watch?v=dOa_4jPpA48)
+
 
 
 # Getting started
