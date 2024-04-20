@@ -151,6 +151,8 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         vm.uid.value = intent.getStringExtra("uid")
+        vm.getUser()
+        println(vm.username.value)
     }
 
     @Composable
@@ -187,7 +189,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
         Text(
-            text = "Hello $name!",
+            text = "Hello ${vm.username.value}!",
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             modifier = modifier

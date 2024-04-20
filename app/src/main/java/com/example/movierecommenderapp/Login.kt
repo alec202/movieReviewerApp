@@ -75,6 +75,10 @@ class LoginActivity : ComponentActivity() {
             mutableStateOf("")
         }
 
+        var userName by remember {
+            mutableStateOf("")
+        }
+
         // variable for showing/hiding user password, usual function
         var showPass by remember { mutableStateOf(value = false) }
 
@@ -96,6 +100,8 @@ class LoginActivity : ComponentActivity() {
             OutlinedTextField(value = userEmail, onValueChange = {
                 userEmail = it
                 vm.noEmail.value = it
+                userName = userEmail.substringBefore("@", "Username")
+                vm.noUser.value = userName
 
                 // Hint text
             }, label = {
@@ -109,7 +115,6 @@ class LoginActivity : ComponentActivity() {
             OutlinedTextField(value = userPass, onValueChange = {
                 userPass = it
                 vm.noPass.value = it
-
                 // Hint text
             }, label = {
                 Text(text = "Password - 6+ chars")
@@ -179,6 +184,10 @@ class LoginActivity : ComponentActivity() {
         vm.uid.observe(this) {
             // When the UID is not null, we transition to the main screen
             it?.let {
+                if (vm.newCheck.value == 1){
+                    vm.createUserData(vm.noUser.value!!)
+                    vm.newCheck.value = 0
+                }
                 val toMain = Intent(this, MainActivity::class.java)
                 toMain.putExtra("uid", vm.uid.value)
                 toMain.putExtra("username", "N/A")
@@ -200,6 +209,7 @@ class LoginActivity : ComponentActivity() {
     fun createAccount() {
         if (vm.noEmail.value != "" && vm.noPass.value != "") {
             vm.newAccount(vm.noEmail.value!!, vm.noPass.value!!)
+            vm.newCheck.value = 1
         }
     }
 
