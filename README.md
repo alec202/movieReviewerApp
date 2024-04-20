@@ -472,6 +472,74 @@ fun GreetingPreview() {
 Here we use the MovieRecommenderAppTheme, which I will touch on soon. Also, we then set the entire content of the page! We have spacers, then the greeting, then the watched movies, then the favorite movies, then the
 favorite tv, and then the logout button. As you can see, composable makes reusing code extremely simple! We even use the displayedWatchedMovies function for more than just watched movies, as you can see.
 
+**Step 7: Set content and add extras**
+
+```kotlin
+
+setContent {
+        MovieRecommenderAppTheme {
+            // A surface container using the 'background' color from the theme
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.LightGray)
+                    // center everything horizontally
+                    , horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    GreetingPreview()
+        }
+    }
+}
+
+```
+
+Here, we again set the content, using the theme, as well as using the surface to get the theme. We make the entire layout a column, and of course, add the actual content we created right before this.
+
+**Extra: THEMES**
+
+When using Jetpack Compose, a ui.theme folder will be created in your project. Here, you can add certain themes that you can apply to any and all pages. Here is our theme in a "Theme.kt" file:
+
+```kotlin
+
+@Composable
+fun MovieRecommenderAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
+) {
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        darkTheme -> DarkColorScheme
+        else -> LightColorScheme
+    }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        }
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
+}
+
+```
+
+Just to quickly go over this, we do things here such as creating a dark theme if the user's device is in dark mode. We also pick the color scheme, typography, and content. This is a great way to make your app uniform throughout.
 
 ## Movie/Show Information Screen
 
