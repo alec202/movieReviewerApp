@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.movierecommenderapp.ui.theme.MovieRecommenderAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -52,8 +53,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val username = intent?.getStringExtra("username")
             val uid = intent?.getStringExtra("uid")
+            vm.uid.value = uid
+            vm.getUserInfo()
             val watchedMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             val watchedTVState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
             val favMoviesState = remember { mutableStateOf<List<movieInfo>>(emptyList()) }
@@ -64,6 +66,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val username by vm.username.collectAsStateWithLifecycle()
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -122,9 +126,7 @@ class MainActivity : ComponentActivity() {
                         val thisActivity = thisContext as? Activity
 
                         Spacer(modifier = Modifier.size(15.dp))
-                        if (username != null) {
                             Greeting(name = username)
-                        }
                         Spacer(modifier = Modifier.size(15.dp))
                         SearchBar(destLauncher, thisActivity, thisContext)
                         Spacer(modifier = Modifier.size(25.dp))
@@ -151,7 +153,7 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         vm.uid.value = intent.getStringExtra("uid")
-        vm.getUser()
+        vm.getUserInfo()
         println(vm.username.value)
     }
 
