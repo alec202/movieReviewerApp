@@ -541,6 +541,11 @@ fun MovieRecommenderAppTheme(
 
 Just to quickly go over this, we do things here such as creating a dark theme if the user's device is in dark mode. We also pick the color scheme, typography, and content. This is a great way to make your app uniform throughout.
 
+FYI, here is the screen when movies or shows are added:
+
+![3](https://github.com/alec202/movieReviewerApp/assets/117123349/4d613979-24db-4fb2-ac2c-c9bd56ff6343)
+
+
 ## Movie/Show Information Screen
 
 Lastly, there is our movie & show info screen. After searching, the user is directed here. You can scroll through the results, which includes a title and description of each listing. After clicking on a specific listing, you can 
