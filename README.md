@@ -814,3 +814,9 @@ our project here, but there are even more that can be implemented. There are als
 Here is some great [Jetpack Compose Documentation](https://developer.android.com/develop/ui/compose)
 
 Medium also has some great tutorials, [such as this one](https://medium.com/@WhiteBatCodes/simple-login-page-in-jetpack-compose-9c92af690234)
+
+Another Medium article that was very helpful for understanding [how to use your ViewModel in Jetpack Compose to Update your UI Using Flow](https://medium.com/@chiragthummar16/jetpack-compose-viewmodel-update-ui-using-flow-9ea7870a3072), since mutable live data won't work.
+
+Additionally, this youtuber, [Phillip Lackner](https://www.youtube.com/@PhilippLackner), has some great Jetpack Compose tutorials as well as everything Android. 
+[Click here](https://www.youtube.com/watch?v=6_wK_Ud8--0&t=1663s) for a link to a video he made for a quick overview of Jetpack Compose.
+[Click here](https://www.youtube.com/watch?v=cDabx3SjuOY&list=PLQkwcJG4YTCSpJ2NLhDTHhi6XBNfk9WiC) for a playlist he made where he goes over all things Jetpack Compose with detail
